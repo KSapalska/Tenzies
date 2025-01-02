@@ -3,7 +3,7 @@ const root= createRoot(document.getElementById("root"))
 
 import App from "./App.jsx";
 
-root.render(<App/>);
+root.render(<App />);
 
 
 
