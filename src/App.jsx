@@ -24,7 +24,7 @@ export default function App() {
     setElements(oldDie=>elements.map(die=>id===die.id? {...die, isHeld :!die.isHeld} : die) )
    }
 
-const [elements,setElements]= useState(generateAllNewDice());
+const [elements,setElements]= useState(()=>generateAllNewDice());
 
 const isAllTheSame= elements.every(die =>elements[0].value===die.value )
 const isAllHeld = elements.every(die => die.isHeld === true)
@@ -32,7 +32,8 @@ let gameWon=false
 const { width, height } = useWindowSize();
 
 if (isAllTheSame && isAllHeld) {
-  gameWon=true;   
+  gameWon=true;
+    
   }
 
 const diceElements = elements.map(dieObj=><Die 
@@ -44,6 +45,7 @@ const diceElements = elements.map(dieObj=><Die
     />)
 
 function rollNumbers(){
+  gameWon ?  setElements(()=>generateAllNewDice()) :
   setElements(oldDie=> elements.map(die=> die.isHeld === true ? die : {...die, value: Math.floor(Math.random() * 6) + 1 }) )
 }
 
@@ -54,7 +56,7 @@ function rollNumbers(){
   return (
     <>
       <main>
-      {gameWon&&<Confetti
+      {gameWon && <Confetti
         width={width}
         height={height}
       />}
